@@ -82,7 +82,7 @@ if uploaded_file and run_forecast:
         mode="lines", name="Forecast", line=dict(color="seagreen"), fill='tozeroy'
     ))
     fig.update_layout(
-        title="📈 Service Request Forecast",
+        title="📈 Call Volume Forecast",
         xaxis_title="Date",
         yaxis_title="Forecasted Volume",
         template="plotly_white",
