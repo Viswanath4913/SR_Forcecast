@@ -12,9 +12,21 @@ data_type = st.radio("What kind of data are you uploading?", ("Sales Data", "Ser
 # Step 2: Upload CSV
 uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 
-# Step 3: Forecast Frequency
+# Step 3: Frequency and Forecast Horizon
 freq = st.selectbox("Select Forecast Frequency", ["Daily", "Weekly", "Monthly", "Yearly"])
 freq_map = {"Daily": "D", "Weekly": "W", "Monthly": "M", "Yearly": "Y"}
+
+# Forecast period slider settings
+default_periods = {"Daily": 30, "Weekly": 12, "Monthly": 12, "Yearly": 5}
+max_periods = {"Daily": 365, "Weekly": 52, "Monthly": 24, "Yearly": 10}
+
+forecast_period = st.slider(
+    f"How many {freq.lower()}s to forecast?",
+    min_value=1,
+    max_value=max_periods[freq],
+    value=default_periods[freq],
+    step=1
+)
 
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
@@ -41,7 +53,7 @@ if uploaded_file:
     model = Prophet()
     model.fit(df)
 
-    future = model.make_future_dataframe(periods=12, freq=freq_map[freq])
+    future = model.make_future_dataframe(periods=forecast_period, freq=freq_map[freq])
     forecast = model.predict(future)[["ds", "yhat"]]
 
     last_date = df["ds"].max()
