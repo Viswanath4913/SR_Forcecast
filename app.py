@@ -3,8 +3,8 @@ import pandas as pd
 from prophet import Prophet
 import plotly.graph_objects as go
 
-st.set_page_config(page_title="Service Request Forecast", layout="centered")
-st.title("🔧 Service Request Forecast")
+st.set_page_config(page_title="Call Volume Forecast", layout="centered")
+st.title("🔧 Call Volume Forecast")
 
 # Input Type
 data_type = st.radio("What kind of data are you uploading?", ("Sales Data", "Service Request Data"))
