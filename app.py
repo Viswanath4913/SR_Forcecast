@@ -46,7 +46,10 @@ if uploaded_file and run_forecast:
     df = df.resample(freq_map[freq], on="ds").sum().reset_index()
 
     st.subheader("📊 Historical Data")
-    st.dataframe(df.tail())
+    df_display = df.copy()
+    df_display["ds"] = df_display["ds"].dt.strftime("%d-%m-%Y")
+    st.dataframe(df_display.tail())
+
 
     # Train and Forecast
     model = Prophet()
